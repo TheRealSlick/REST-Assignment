@@ -1,6 +1,8 @@
+// Require Modules
 const router = require('express').Router()
 const places = require('../models/places')
 
+// GET Methods
 router.get('/', (req, res) => {
     res.render('places/index', { places })
 })
@@ -32,6 +34,29 @@ router.get('/:id', (req, res) => {
     } else {
         res.render('places/show', {place: places[id], id})
     }
+})
+
+router.put('/:id', (req, res) => {
+  let id = Number(req.params.id)
+  if (isNaN(id)) {
+    res.render('error404')
+  } else if (!places[id]) {
+    res.render('error404')
+  } else {
+    // Go to the req.body and make sure the data passed is valid, if not, set default values
+    if (!req.body.pic) {
+      req.body,pic = './public/images/cool-parrot.jpg'
+    }
+    if (!req.body.city) {
+      req.body.city = 'Anytown'
+    }
+    if (!req.body.state) {
+      req.body.state = 'USA'
+    }
+    // Saving new data to places[id]
+    places[id] = req.body
+    res.redirect(`/places/${id}`)
+  }
 })
 
 router.delete('/:id', (req, res) => {
