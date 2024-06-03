@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "builds": [{"src": "./places.js", "use": "@vercel/node"}],
+    "builds": [{"src": "./controllers/places.js", "use": "@vercel/node"}],
     "routes": [{"src": "/(.*)","dest": "/"}
     ]
 }
